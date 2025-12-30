@@ -126,8 +126,13 @@ def update(patient_id: str, patient_update: PatientUpdate):
     existing_patient = data[patient_id]
 
     updated_fields = patient_update.model_dump(exclude_unset=True)
+    
+    # normalize gender to Capitalized (required by Patient model)
+    if "gender" in updated_fields:
+        updated_fields["gender"] = updated_fields["gender"].capitalize()
+    
     existing_patient.update(updated_fields)
-
+    
     # validate full object
     patient_obj = Patient(id=patient_id, **existing_patient)
 
