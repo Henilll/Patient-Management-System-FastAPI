@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | PatientMS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="bg-gradient-to-br from-slate-900 to-black min-h-screen p-4">
+
+  <!-- NAVBAR -->
+  <nav class="bg-white/10 backdrop-blur-xl p-5 rounded-2xl flex justify-between items-center mb-6 shadow-lg">
+    <h1 class="text-2xl font-bold text-white">🩺 PatientMS</h1>
+    <div class="space-x-4">
+      <a href="index.html" class="hover:underline text-white font-medium">Dashboard</a>
+      <a href="patients.html" class="hover:underline text-white font-medium">Patients</a>
+      <a href="create.html" class="hover:underline text-white font-medium">Add Patient</a>
+      <a href="about.html" class="hover:underline text-white font-medium">About</a>
+    </div>
+  </nav>
+
+  <section class="p-6">
+    <h2 class="text-3xl font-bold mb-6 text-white">Dashboard</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white/10 backdrop-blur-xl p-6 rounded-3xl shadow hover:scale-105 transition-transform duration-300">
+        <p class="text-white text-lg">Total Patients</p>
+        <h3 id="total" class="text-4xl font-bold text-white mt-2">0</h3>
+      </div>
+
+      <div class="bg-white/10 backdrop-blur-xl p-6 rounded-3xl shadow hover:scale-105 transition-transform duration-300">
+        <p class="text-white text-lg">Average BMI</p>
+        <h3 id="avgBMI" class="text-4xl font-bold text-white mt-2">0</h3>
+      </div>
+
+      <div class="bg-white/10 backdrop-blur-xl p-6 rounded-3xl shadow hover:scale-105 transition-transform duration-300">
+        <p class="text-white text-lg">Overweight / Obese</p>
+        <h3 id="risk" class="text-4xl font-bold text-white mt-2">0</h3>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const API = "https://patient-management-system-fastapi.onrender.com";
+
+    async function fetchJSON(url, options = {}) {
+      const res = await fetch(url, {
+        headers: { "Content-Type": "application/json" },
+        ...options
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(()=>({detail: res.statusText}));
+        throw err.detail || "Something went wrong";
+      }
+      return res.json();
+    }
+
+    (async () => {
+      const data = await fetchJSON(`${API}/view`);
+      const patients = Object.values(data);
+
+      document.getElementById("total").innerText = patients.length;
+
+      const avg = patients.reduce((s,p)=>s+p.bmi,0)/patients.length;
+      document.getElementById("avgBMI").innerText = avg.toFixed(1);
+
+      document.getElementById("risk").innerText =
+        patients.filter(p => p.bmi >= 25).length;
+    })();
+  </script>
+</body>
+</html>

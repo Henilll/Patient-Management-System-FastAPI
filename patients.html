@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Patients | PatientMS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="bg-slate-900 text-white min-h-screen p-4">
+
+  <!-- NAVBAR -->
+  <nav class="bg-white/10 backdrop-blur-xl p-5 rounded-2xl flex justify-between items-center mb-6 shadow-lg">
+    <h1 class="text-2xl font-bold text-white">🩺 PatientMS</h1>
+    <div class="space-x-4">
+      <a href="index.html" class="hover:underline text-white font-medium">Dashboard</a>
+      <a href="patients.html" class="hover:underline text-white font-medium">Patients</a>
+      <a href="create.html" class="hover:underline text-white font-medium">Add Patient</a>
+      <a href="about.html" class="hover:underline text-white font-medium">About</a>
+    </div>
+  </nav>
+
+  <h1 class="text-3xl font-bold mb-6 text-white">Patients</h1>
+
+  <div class="flex gap-4 mb-6 flex-wrap">
+    <select id="sortBy" class="bg-slate-800 p-2 rounded text-white">
+      <option value="bmi">BMI</option>
+      <option value="height">Height</option>
+      <option value="weight">Weight</option>
+    </select>
+
+    <select id="order" class="bg-slate-800 p-2 rounded text-white">
+      <option value="asc">Ascending</option>
+      <option value="desc">Descending</option>
+    </select>
+
+    <button onclick="loadPatients()" class="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700 transition">Sort</button>
+  </div>
+
+  <div id="list" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+
+  <script>
+    const API = "https://patient-management-system-fastapi.onrender.com";
+
+    async function fetchJSON(url, options = {}) {
+      const res = await fetch(url, {
+        headers: { "Content-Type": "application/json" },
+        ...options
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(()=>({detail: res.statusText}));
+        throw err.detail || "Something went wrong";
+      }
+      return res.json();
+    }
+
+    const sortByEl = document.getElementById("sortBy");
+    const orderEl = document.getElementById("order");
+    const list = document.getElementById("list");
+
+    async function loadPatients() {
+      try {
+        const data = await fetchJSON(
+          `${API}/sort?sort_by=${sortByEl.value}&ordered=${orderEl.value}`
+        );
+
+        list.innerHTML = "";
+        data.forEach(p => {
+          list.innerHTML += `
+            <div class="bg-white/10 p-5 rounded-3xl backdrop-blur-xl shadow hover:scale-105 transition-transform duration-300">
+              <h3 class="text-xl font-bold">${p.name}</h3>
+              <p>${p.city}</p>
+              <p>BMI: ${p.bmi} (${p.verdict})</p>
+              <div class="flex gap-2 mt-3">
+                <button onclick="deletePatient('${p.id}')"
+                  class="text-red-400 hover:underline">Delete</button>
+                <a href="edit.html?id=${p.id}" class="text-green-400 hover:underline">Edit</a>
+              </div>
+            </div>`;
+        });
+      } catch(err) {
+        list.innerHTML = `<p class="text-red-400">${err}</p>`;
+      }
+    }
+
+    async function deletePatient(id) {
+      if(!confirm("Are you sure to delete this patient?")) return;
+      await fetchJSON(`${API}/delete/${id}`, { method: "DELETE" });
+      loadPatients();
+    }
+
+    loadPatients();
+  </script>
+</body>
+</html>

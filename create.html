@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add Patient | PatientMS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body class="bg-gradient-to-br from-slate-900 to-black min-h-screen p-4">
+
+    <!-- NAVBAR -->
+    <nav
+        class="bg-white/10 backdrop-blur-xl p-5 rounded-2xl flex justify-between items-center shadow-lg fixed w-full z-10 top-0">
+        <h1 class="text-2xl font-bold text-white">🩺 PatientMS</h1>
+        <div class="space-x-4">
+            <a href="index.html" class="hover:underline text-white font-medium">Dashboard</a>
+            <a href="patients.html" class="hover:underline text-white font-medium">Patients</a>
+            <a href="create.html" class="hover:underline text-white font-medium">Add Patient</a>
+            <a href="about.html" class="hover:underline text-white font-medium">About</a>
+        </div>
+    </nav>
+
+    <div class="mt-24 bg-white/10 backdrop-blur-xl rounded-3xl p-8 w-full max-w-lg shadow-lg mx-auto">
+        <h1 class="text-3xl font-bold mb-6 text-center text-white">🩺 Add Patient</h1>
+
+        <form id="form" class="space-y-4">
+            <input id="id" type="text" placeholder="Patient ID (P001)" required
+                class="w-full p-3 rounded-xl bg-white/20 text-white placeholder-white outline-none focus:ring-2 focus:ring-blue-500">
+
+            <input id="name" type="text" placeholder="Full Name" required
+                class="w-full p-3 rounded-xl bg-white/20 text-white placeholder-white outline-none focus:ring-2 focus:ring-blue-500">
+
+            <input id="city" type="text" placeholder="City" required
+                class="w-full p-3 rounded-xl bg-white/20 text-white placeholder-white outline-none focus:ring-2 focus:ring-blue-500">
+
+            <input id="age" type="number" placeholder="Age" required min="1" max="120"
+                class="w-full p-3 rounded-xl bg-white/20 text-white placeholder-white outline-none focus:ring-2 focus:ring-blue-500">
+
+            <select id="gender" required
+                class="w-full p-3 rounded-xl bg-white/20 text-white outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <input id="height" type="number" placeholder="Height (meters)" step="0.01" min="0.1" required
+                class="w-full p-3 rounded-xl bg-white/20 text-white placeholder-white outline-none focus:ring-2 focus:ring-blue-500">
+
+            <input id="weight" type="number" placeholder="Weight (kg)" step="0.1" min="0.1" required
+                class="w-full p-3 rounded-xl bg-white/20 text-white placeholder-white outline-none focus:ring-2 focus:ring-blue-500">
+
+            <button type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-700 transition-colors text-white font-bold p-3 rounded-xl">Create
+                Patient</button>
+        </form>
+
+        <p id="msg" class="mt-4 text-center text-white"></p>
+    </div>
+
+    <script>
+        const API = "https://patient-management-system-fastapi.onrender.com";
+        const form = document.getElementById("form");
+        const msg = document.getElementById("msg");
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+
+            const body = {
+                id: document.getElementById("id").value.trim(),
+                name: document.getElementById("name").value.trim(),
+                city: document.getElementById("city").value.trim(),
+                age: Number(document.getElementById("age").value),
+                gender: document.getElementById("gender").value, // DO NOT lowercase
+                height: Number(document.getElementById("height").value),
+                weight: Number(document.getElementById("weight").value)
+            };
+
+            console.log("Sending:", body); // 🔥 Debug
+
+            try {
+                const res = await fetch(`${API}/create`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    throw data;
+                }
+
+                msg.innerText = "✅ Patient Created Successfully!";
+                msg.className = "text-green-400 text-center mt-4";
+                form.reset();
+
+            } catch (err) {
+                msg.innerText =
+                    "❌ " + (err.detail ? JSON.stringify(err.detail) : err.message || "Invalid data");
+                msg.className = "text-red-400 text-center mt-4";
+            }
+        };
+    </script>
+
+</body>
+
+</html>

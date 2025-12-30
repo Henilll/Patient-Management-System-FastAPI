@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About | PatientMS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body class="bg-gradient-to-br from-slate-900 to-black min-h-screen p-4 text-white">
+
+  <!-- NAVBAR -->
+  <nav class="bg-white/10 backdrop-blur-xl p-5 rounded-2xl flex justify-between items-center shadow-lg fixed w-full z-10 top-0 left-0">
+    <h1 class="text-2xl font-bold">🩺 PatientMS</h1>
+    <div class="space-x-4">
+      <a href="index.html" class="hover:underline font-medium">Dashboard</a>
+      <a href="patients.html" class="hover:underline font-medium">Patients</a>
+      <a href="create.html" class="hover:underline font-medium">Add Patient</a>
+      <a href="about.html" class="underline font-semibold">About</a>
+    </div>
+  </nav>
+
+  <!-- CONTENT -->
+  <div class="mt-28 max-w-4xl mx-auto bg-white/10 backdrop-blur-xl rounded-3xl p-10 shadow-lg">
+
+    <h2 class="text-4xl font-bold mb-6 text-center">About PatientMS</h2>
+
+    <p class="text-lg text-gray-200 leading-relaxed mb-6">
+      <strong>PatientMS</strong> is a modern Patient Management System built using
+      <span class="text-blue-400 font-semibold">FastAPI</span> for the backend and
+      <span class="text-blue-400 font-semibold">HTML, Tailwind CSS, and JavaScript</span>
+      for the frontend.
+    </p>
+
+    <p class="text-lg text-gray-200 leading-relaxed mb-6">
+      This application allows healthcare providers or administrators to
+      <strong>create, view, update, sort, and delete patient records</strong>
+      efficiently through a clean and responsive interface.
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-6 mt-10">
+      <div class="bg-white/10 rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">🚀 Features</h3>
+        <ul class="list-disc list-inside text-gray-300 space-y-1">
+          <li>Create & manage patient records</li>
+          <li>Automatic BMI calculation</li>
+          <li>Health verdict (Normal, Overweight, etc.)</li>
+          <li>Sort patients by height, weight, or BMI</li>
+          <li>Fast & secure REST API</li>
+        </ul>
+      </div>
+
+      <div class="bg-white/10 rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">🛠 Tech Stack</h3>
+        <ul class="list-disc list-inside text-gray-300 space-y-1">
+          <li>FastAPI (Python)</li>
+          <li>Pydantic Validation</li>
+          <li>HTML5</li>
+          <li>Tailwind CSS</li>
+          <li>Vanilla JavaScript (Fetch API)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-10 text-center text-gray-300">
+      <p>
+        Developed by <span class="font-semibold text-white">Henil Bhavsar</span>
+      </p>
+      <p class="text-sm mt-2">
+        A complete full-stack project showcasing modern API-driven development.
+      </p>
+    </div>
+
+  </div>
+
+</body>
+</html>
