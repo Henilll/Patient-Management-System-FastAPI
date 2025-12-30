@@ -2,6 +2,7 @@ from fastapi import FastAPI,Path,HTTPException,Query
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel,Field,computed_field
 from typing import Annotated,Literal,Optional
+from fastapi.middleware.cors import CORSMiddleware
 import json
 
 def load_data():
@@ -14,6 +15,13 @@ def save_data(data):
         json.dump(data,f)
 
 app=FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class Patient(BaseModel):
     id:Annotated[str,Field(...,description="Id of the Patient",examples=["P001"])]
