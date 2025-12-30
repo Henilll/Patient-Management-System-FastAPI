@@ -1,13 +1,26 @@
-# 🏥 Patient Management System API
+# 🏥 Patient Management System
 
-Live Demo https://patient-management-system-fastapi.onrender.com/view
+## 🔗 Live Demos
 
-A fully functional **FastAPI-based REST API** to manage patient records with features like **CRUD operations**, **BMI calculation**, **sorting**, and **strong data validation** using **Pydantic**.
+- **Frontend (UI)**:  
+  👉 https://patient-management-systemm.netlify.app/
+
+- **Backend API**:  
+  👉 https://patient-management-system-fastapi.onrender.com/view
+
+A fully functional **Patient Management System** built with a **FastAPI backend** and a **hosted frontend UI**, supporting **CRUD operations**, **BMI calculation**, **sorting**, and **robust data validation** using **Pydantic**.
 
 ---
 
 ## 🚀 Features
 
+### 🖥 Frontend
+- Clean and responsive UI  
+- Patient creation, update, delete, and view  
+- Integrated with FastAPI backend  
+- Deployed on **Netlify**
+
+### ⚙️ Backend
 - ✅ Create patient records  
 - 🔍 View all patients or a single patient  
 - ✏️ Update patient details (partial updates supported)  
@@ -15,21 +28,29 @@ A fully functional **FastAPI-based REST API** to manage patient records with fea
 - 📊 Automatic BMI calculation with health verdict  
 - 🔃 Sort patients by **height**, **weight**, or **BMI**  
 - 📁 JSON-based persistent storage  
-- 🧠 Robust request validation using **Pydantic v2**
+- 🧠 Strong request validation using **Pydantic v2**
 
 ---
 
 ## 🛠 Tech Stack
 
-- **Backend**: FastAPI  
+### Frontend
+- HTML  
+- CSS  
+- JavaScript  
+- Netlify (Hosting)
+
+### Backend
+- **Framework**: FastAPI  
 - **Language**: Python  
 - **Validation**: Pydantic  
 - **Database**: JSON File (`patients.json`)  
 - **Server**: Uvicorn  
+- **Hosting**: Render
 
 ---
 
-## 📂 Project Structure
+## 📂 Project Structure (Backend)
 
 ```text
 patient-management-system-fastapi/
@@ -42,7 +63,7 @@ patient-management-system-fastapi/
 
 ---
 
-## ⚙️ Installation & Setup
+## ⚙️ Installation & Setup (Backend)
 
 ### 1️⃣ Clone the Repository
 ```bash
@@ -54,7 +75,7 @@ cd patient-management-system-fastapi
 ```bash
 python -m venv venv
 source venv/bin/activate   # macOS/Linux
-venv\Scripts\activate    # Windows
+venv\Scripts\activate     # Windows
 ```
 
 ### 3️⃣ Install Dependencies
@@ -69,7 +90,7 @@ uvicorn main:app --reload
 
 ---
 
-## 🌐 Base URL
+## 🌐 Base URL (Local)
 
 ```
 http://127.0.0.1:8000
@@ -82,20 +103,6 @@ http://127.0.0.1:8000
 ### 🏠 Home
 ```http
 GET /
-```
-
-Response:
-```json
-{
-  "message": "Patient Management System API"
-}
-```
-
----
-
-### ℹ️ About
-```http
-GET /about
 ```
 
 ---
@@ -112,11 +119,6 @@ GET /view
 GET /view/{patient_id}
 ```
 
-Example:
-```http
-GET /view/P001
-```
-
 ---
 
 ### ➕ Create Patient
@@ -124,32 +126,11 @@ GET /view/P001
 POST /create
 ```
 
-Request Body:
-```json
-{
-  "id": "P001",
-  "name": "Rahul Sharma",
-  "city": "Ahmedabad",
-  "age": 29,
-  "gender": "Male",
-  "height": 1.72,
-  "weight": 68
-}
-```
-
 ---
 
-### ✏️ Update Patient (Partial Update)
+### ✏️ Update Patient
 ```http
 PATCH /edit/{patient_id}
-```
-
-Example Body:
-```json
-{
-  "city": "Surat",
-  "weight": 70
-}
 ```
 
 ---
@@ -161,39 +142,12 @@ DELETE /delete/{patient_id}
 
 ---
 
-### 🔃 Sort Patients
-```http
-GET /sort?sort_by={field}&ordered={asc|desc}
-```
-
-Allowed Fields:
-- `height`
-- `weight`
-- `bmi`
-
-Example:
-```http
-GET /sort?sort_by=bmi&ordered=desc
-```
-
----
-
 ## 📖 API Documentation
 
-FastAPI provides automatic interactive documentation:
-
-### Swagger UI
+Swagger UI:
 ```
 http://127.0.0.1:8000/docs
 ```
-
----
-
-## 🔒 Error Handling
-
-- **400** – Bad Request  
-- **404** – Patient Not Found  
-- **400** – Duplicate Patient ID  
 
 ---
 
@@ -201,26 +155,7 @@ http://127.0.0.1:8000/docs
 
 **Henil Bhavsar**  
 Computer Engineering Student  
-AI / ML Developer  
-
----
-
-## ⭐ Support
-
-If you found this project helpful:
-
-- ⭐ Star the repository  
-- 🍴 Fork it  
-- 🛠 Contribute improvements  
-
----
-
-## 🔮 Future Improvements
-
-- 🔐 JWT Authentication  
-- 🐳 Docker Support  
-- 🗄 SQLite / PostgreSQL Integration  
-- 🧪 Unit Testing  
+Full Stack Developer | AI / ML Enthusiast  
 
 ---
 
